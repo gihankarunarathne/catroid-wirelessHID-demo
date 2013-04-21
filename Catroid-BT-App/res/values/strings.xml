@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_key_board">KeyBoardActivity</string>
+    <string name="title_activity_mouse">MouseActivity</string>
+    <string name="app_name">Catroid-BT-Client</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <!-- Bluetooth Connection Strings -->
+    <string name="notification_blueth_err">Bluetooth could not be enabled, closing stage</string>
+    <string name="title_paired_devices">Paired devices</string>
+    <string name="title_other_devices">New devices</string>
+    <string name="button_scan">Search Bluetooth devices</string>
+    <string name="select_device">Select your device</string>
+    <string name="scanning">Scanning</string>
+    <string name="connecting_please_wait">Connecting to your device.\nPlease wait...</string>
+    <string name="pairing_message">After pairing, connect.</string>
+    <string name="problem_at_closing">Problem in closing the connection!</string>
+    <string name="bt_connection_failed">Connection to device failed!</string>
+    <string name="no_paired_nxt">No paired NXT found</string>
+    <string name="none_found">No unpaired devices found</string>
+    <string name="none_paired">No paired devices found</string>
+    <string name="no_paired_rfccomm_device">no paired rfccomm device</string>
+</resources>
