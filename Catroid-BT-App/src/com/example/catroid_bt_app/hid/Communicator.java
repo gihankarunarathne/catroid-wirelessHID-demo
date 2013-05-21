@@ -1,6 +1,5 @@
 package com.example.catroid_bt_app.hid;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -29,19 +28,19 @@ public class Communicator {
     hid.stopCommunicator();
   }
 
-  public void send(String msg) {
-    try {
-      byte[] byte_msg = msg.getBytes("US-ASCII");
-      byte[] val = { 0, 0, 0, 1, 0, 0, 0, 0 };
-      hid.sendMessage(val);
-      byte[] key = { 0, 1, 0, 0, 0, 0, 0, 1 };
-      hid.sendMessage(key);
-      Log.i(TAG, "Communicator:Send msg :" + byte_msg);
-    } catch (UnsupportedEncodingException e) {
-      if (D)
-        Log.e(TAG, "Communicator:Error send msg ", e);
-    }
-  }
+  // public void send(String msg) {
+  // try {
+  // byte[] byte_msg = msg.getBytes("US-ASCII");
+  // byte[] val = { 0, 0, 0, 1, 0, 0, 0, 0 };
+  // hid.sendMessage(val);
+  // byte[] key = { 0, 1, 0, 0, 0, 0, 0, 1 };
+  // hid.sendMessage(key);
+  // Log.i(TAG, "Communicator:Send msg :" + byte_msg);
+  // } catch (UnsupportedEncodingException e) {
+  // if (D)
+  // Log.e(TAG, "Communicator:Error send msg ", e);
+  // }
+  // }
 
   public int getModifierCode(int keyValue) {
 
@@ -72,7 +71,8 @@ public class Communicator {
   }
 
   public byte[] generateHidCode(Collection<KeyCode> keys) {
-    Log.d("catBT", "genHIDcode: num# " + keys.size());
+    if (D)
+      Log.d("catBT", "genHIDcode: num# " + keys.size());
     for (KeyCode key : keys) {
       Log.d("catBT",
           "genHIDcode: mod " + key.isModifier() + " val " + key.getKeyCode());
@@ -94,10 +94,8 @@ public class Communicator {
 
     byte[] conv = new byte[10];
 
-    Log.d("catBT", "genHIDcode: final ");
     for (int j = 0; j < 10; j++) {
       conv[j] = (byte) (hidCode[j]);
-      Log.d("catBT", "genHIDcode:j:" + j + " " + conv[j]);
     }
     return conv;
   }

@@ -2,6 +2,7 @@ package org.catrobat.catroid.server.robots;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.util.List;
 
 public class RobotWrapper {
@@ -22,7 +23,7 @@ public class RobotWrapper {
 	}
 
 	public void mouseClick(int code) {
-		robot.mousePress(code);
+		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		robot.delay(100);
 		robot.mouseRelease(code);
 		robot.delay(100);
