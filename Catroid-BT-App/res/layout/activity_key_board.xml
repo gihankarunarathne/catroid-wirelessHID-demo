@@ -48,13 +48,13 @@
             android:layout_height="match_parent" >
 
             <Button
-                android:id="@+id/button_l_shift"
+                android:id="@+id/button_a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="A" />
 
             <Button
-                android:id="@+id/button_l_ctrl"
+                android:id="@+id/button_s"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="S" />
@@ -99,7 +99,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dip"
         android:layout_weight="124.27"
         android:gravity="bottom" >
 

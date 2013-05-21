@@ -35,7 +35,7 @@ import com.example.catroid_bt_app.R;
  */
 public class DeviceListActivity extends Activity {
     // Debugging
-    private static final String TAG = "DeviceListActivity";
+    private static final String TAG = "Catroid-BT";
     private static final boolean D = true;
 
     // Return Intent extra

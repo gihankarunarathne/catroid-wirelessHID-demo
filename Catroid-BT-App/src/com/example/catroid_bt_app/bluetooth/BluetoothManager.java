@@ -16,7 +16,7 @@ import com.example.catroid_bt_app.hid.WirelessManager;
 
 public class BluetoothManager implements WirelessManager {
   //Debugging
-  private static final String TAG = "BluetoothChat";
+  private static final String TAG = "Catroid-BT";
   private static final boolean D = true;
   
   // Blue-tooth status
@@ -41,6 +41,8 @@ public class BluetoothManager implements WirelessManager {
 	  this.act = activity;
 	  this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	  this.activateBluetooth();
+	  if(D) Log.d(TAG, "BluetoothManager Created");
+	  
 	}
 	
 	public synchronized static BluetoothManager getBluetoothManager(Activity activity){
@@ -50,7 +52,7 @@ public class BluetoothManager implements WirelessManager {
 	  return btManager;
 	}
 	
-	public void setMACAddress(String macaddress){
+	public synchronized void setMACAddress(String macaddress){
 	  this.macaddress = macaddress;
 	}
 
@@ -88,6 +90,7 @@ public class BluetoothManager implements WirelessManager {
   public void startCommunicator() {
     if(macaddress != ""){
       this.startBTCommunicator(macaddress);
+      if(D) Log.i(TAG, "Started BTCommunicator with MAC: "+macaddress);
     }
   }
   
@@ -122,7 +125,6 @@ public class BluetoothManager implements WirelessManager {
 
   @Override
   public byte[] recieveMessage() {
-    // TODO Auto-generated method stub
     return null;
   }
 }

@@ -16,7 +16,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
-public class RFCOMM extends Thread{
+public class RFCOMM extends Thread {
   // Debugging
   private static final String TAG = "Catroid-BT";
   private static final boolean D = true;
@@ -37,8 +37,11 @@ public class RFCOMM extends Thread{
 
   /**
    * Public constructor
-   * @param socket Blue-tooth Socket
-   * @param btAdapter Blue-tooth Adapter
+   * 
+   * @param socket
+   *          Blue-tooth Socket
+   * @param btAdapter
+   *          Blue-tooth Adapter
    */
   public RFCOMM(BluetoothAdapter btAdapter) {
     this.btAdapter = btAdapter;
@@ -46,7 +49,9 @@ public class RFCOMM extends Thread{
 
   /**
    * Set device MACAddress
-   * @param mMACaddress MacAddress to be set
+   * 
+   * @param mMACaddress
+   *          MacAddress to be set
    */
   public void setMACAddress(String mMACaddress) {
     this.macAddress = mMACaddress;
@@ -54,7 +59,9 @@ public class RFCOMM extends Thread{
 
   /**
    * Set Service UUID
-   * @param serviceUUID Service UUID to be set
+   * 
+   * @param serviceUUID
+   *          Service UUID to be set
    */
   public void setServiceUUID(UUID serviceUUID) {
     this.serviceUUID = serviceUUID;
@@ -62,10 +69,11 @@ public class RFCOMM extends Thread{
 
   /**
    * Check the socket state
+   * 
    * @return boolean if connected send true, otherwise false
    */
   public boolean isConnected() {
-    return connected;
+    return this.mmSocket.isConnected();
   }
 
   /**
@@ -83,7 +91,11 @@ public class RFCOMM extends Thread{
     while (connected) {
       try {
         receiveMessage();
-
+        try {
+          Thread.sleep(40);
+        } catch (InterruptedException e) {
+          Log.e(TAG, "RFCOMM:unable to halt..", e);
+        }
       } catch (IOException e) {
         return;
       }
@@ -93,6 +105,9 @@ public class RFCOMM extends Thread{
   public void createConnection(String macAddress, UUID serviceUUID)
       throws IOException {
     try {
+      if (D)
+        Log.i(TAG, "RFCOMM:Start creating.. with MAC:" + macAddress + " UUID:"
+            + serviceUUID);
       BluetoothSocket tmpBTSock;
       BluetoothDevice btDevice = null;
       btDevice = btAdapter.getRemoteDevice(macAddress);
@@ -117,7 +132,9 @@ public class RFCOMM extends Thread{
       mmSocket = tmpBTSock;
       mmInStream = mmSocket.getInputStream();
       mmOutStream = mmSocket.getOutputStream();
-      connected = true;
+      connected = mmSocket.isConnected();
+      if (D)
+        Log.i(TAG, "Created socket. State: " + mmSocket.isConnected());
     } catch (IOException e) {
       Log.d(TAG, e.getMessage());
     }
@@ -144,21 +161,28 @@ public class RFCOMM extends Thread{
 
   /**
    * Send message to PC side
-   * @param bytes Message to be send
+   * 
+   * @param bytes
+   *          Message to be send
    */
-  public void sendMessage(byte[] bytes) {
-    try {
-      mmOutStream.write(bytes);
-    } catch (IOException e) {
-      Log.w(TAG, "Don't send msg "+e.getMessage());
+  public synchronized void sendMessage(byte[] bytes) {
+    if (mmSocket.isConnected()) {
+      try {
+        mmOutStream.write(bytes);
+        Log.i(TAG, "RFCOMM:Send msg:" + bytes.toString());
+      } catch (IOException e) {
+        Log.w(TAG, "Bluetooth Disconnected. " + e.getMessage());
+      }
     }
   }
+
   /**
    * Read data
+   * 
    * @return return received message
    * @throws IOException
    */
-  public byte[] receiveMessage() throws IOException {
+  public synchronized byte[] receiveMessage() throws IOException {
     if (mmInStream == null) {
       throw new IOException();
     }
