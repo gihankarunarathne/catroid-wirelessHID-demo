@@ -22,12 +22,21 @@ public class KeyCode {
 
 	private boolean isModifier;
 	private int keyCode;
+	private int eventType;
 
 	public KeyCode() {
+	    this.eventType = 1;
 	}
 
 	public KeyCode(boolean isModifier, int keyCode) {
 		this.isModifier = isModifier;
+		this.keyCode = keyCode;
+		this.eventType = 1;
+	}
+	
+	public KeyCode(int eventType,int keyCode){
+		this.isModifier = false;
+		this.eventType = eventType;
 		this.keyCode = keyCode;
 	}
 
@@ -45,5 +54,13 @@ public class KeyCode {
 
 	public void setKeyCode(int keyCode) {
 		this.keyCode = keyCode;
+	}
+	
+	public int getEventType(){
+		return this.eventType;
+	}
+	
+	public void setEventType(int eventType) {
+		this.eventType = eventType;
 	}
 }
