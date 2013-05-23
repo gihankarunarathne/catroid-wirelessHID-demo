@@ -1,5 +1,6 @@
 package org.catrobat.catroid.server.robots;
 
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,7 +60,8 @@ public class RobotMapper {
 
 	switch (eventType) {
 	case 2: // set Mouse click
-	    combine = lookup(value);
+	    combine = (lookup(value) == 1024) ? InputEvent.BUTTON1_MASK :
+		(lookup(value) == 2048) ? InputEvent.BUTTON2_MASK : InputEvent.BUTTON3_MASK; 
 	    break;
 	case 3: // set mouse wheel +
 	    combine = value;
@@ -69,20 +71,16 @@ public class RobotMapper {
 	    combine *= -1;
 	    break;
 	case 5: // set mouse x+, move y+
-	    combine = value & 0x7;
+	    combine = value;
 	    break;
 	case 6: // set mouse x+, move y-
-	    combine = value & 0x7;
-	    combine *= -1;
+	    combine = value;
 	    break;
 	case 7: // set mouse y+, move x+
-	    combine = value & 0x70;
-	    combine = combine >> 4;
+	    combine = value;
 	    break;
 	case 8: // set mouse y+, move x-
-	    combine = value & 0x70;
-	    combine = value >> 4;
-	    combine *= -1;
+	    combine = value;
 	    break;
 	}
 

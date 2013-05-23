@@ -20,47 +20,65 @@ package com.example.catroid_bt_app.hid;
 
 public class KeyCode {
 
-	private boolean isModifier;
-	private int keyCode;
-	private int eventType;
+    private boolean isModifier;
+    private int keyCode;
+    private int eventType;
+    private int mouseDX;
+    private int mouseDY;
 
-	public KeyCode() {
-	    this.eventType = 1;
-	}
+    public KeyCode() {
+        this.eventType = 1;
+    }
 
-	public KeyCode(boolean isModifier, int keyCode) {
-		this.isModifier = isModifier;
-		this.keyCode = keyCode;
-		this.eventType = 1;
-	}
-	
-	public KeyCode(int eventType,int keyCode){
-		this.isModifier = false;
-		this.eventType = eventType;
-		this.keyCode = keyCode;
-	}
+    public KeyCode(boolean isModifier, int keyCode) {
+        this.isModifier = isModifier;
+        this.keyCode = keyCode;
+        this.eventType = 1;
+    }
 
-	public boolean isModifier() {
-		return isModifier;
-	}
+    public KeyCode(int eventType, int keyCode) {
+        this.isModifier = false;
+        this.eventType = eventType;
+        this.keyCode = keyCode;
+    }
 
-	public void setModifier(boolean isModifier) {
-		this.isModifier = isModifier;
-	}
+    public KeyCode(int eventType, int dx, int dy) {
+        this.isModifier = false;
+        this.eventType = eventType;
+        this.keyCode = 0;
+        this.mouseDX = dx;
+        this.mouseDY = dy;
+    }
 
-	public int getKeyCode() {
-		return keyCode;
-	}
+    public boolean isModifier() {
+        return isModifier;
+    }
 
-	public void setKeyCode(int keyCode) {
-		this.keyCode = keyCode;
-	}
-	
-	public int getEventType(){
-		return this.eventType;
-	}
-	
-	public void setEventType(int eventType) {
-		this.eventType = eventType;
-	}
+    public void setModifier(boolean isModifier) {
+        this.isModifier = isModifier;
+    }
+
+    public int getKeyCode() {
+        return keyCode;
+    }
+
+    public void setKeyCode(int keyCode) {
+        this.keyCode = keyCode;
+    }
+
+    public int getEventType() {
+        return this.eventType;
+    }
+
+    public void setEventType(int eventType) {
+        this.eventType = eventType;
+    }
+
+    public int getMouseDX() {
+        return this.mouseDX;
+    }
+
+    public int getMouseDY() {
+        return this.mouseDY;
+    }
 }
