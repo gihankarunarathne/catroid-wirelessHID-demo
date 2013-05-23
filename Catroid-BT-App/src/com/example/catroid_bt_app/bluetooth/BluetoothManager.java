@@ -74,8 +74,7 @@ public class BluetoothManager implements WirelessManager {
     }
 
     private void ensureDiscoverable() {
-        if (D)
-            Log.d(TAG, "ensure discoverable");
+
         if (bluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
             Intent discoverableIntent = new Intent(
                     BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
@@ -87,7 +86,6 @@ public class BluetoothManager implements WirelessManager {
 
     @Override
     public void getCommunicator() {
-        // TODO Auto-generated method stub
 
     }
 
@@ -113,8 +111,9 @@ public class BluetoothManager implements WirelessManager {
                 rfCom.destroyConnection();
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                rfCom = null;
             }
-            rfCom = null;
         }
     }
 
@@ -131,6 +130,11 @@ public class BluetoothManager implements WirelessManager {
 
     @Override
     public byte[] recieveMessage() {
-        return null;
+        try {
+            return this.rfCom.receiveMessage();
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+            return null;
+        }
     }
 }

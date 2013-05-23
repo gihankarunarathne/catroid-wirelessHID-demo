@@ -33,45 +33,20 @@ public class RFCOMM extends Thread {
 
     protected byte[] returnMessage;
 
-    protected boolean connected = false;
+    protected boolean isConnected = false;
 
-    /**
-     * Public constructor
-     * 
-     * @param socket
-     *            Blue-tooth Socket
-     * @param btAdapter
-     *            Blue-tooth Adapter
-     */
     public RFCOMM(BluetoothAdapter btAdapter) {
         this.btAdapter = btAdapter;
     }
 
-    /**
-     * Set device MACAddress
-     * 
-     * @param mMACaddress
-     *            MacAddress to be set
-     */
     public void setMACAddress(String mMACaddress) {
         this.macAddress = mMACaddress;
     }
 
-    /**
-     * Set Service UUID
-     * 
-     * @param serviceUUID
-     *            Service UUID to be set
-     */
     public void setServiceUUID(UUID serviceUUID) {
         this.serviceUUID = serviceUUID;
     }
 
-    /**
-     * Check the socket state
-     * 
-     * @return boolean if connected send true, otherwise false
-     */
     public boolean isConnected() {
         return this.mmSocket.isConnected();
     }
@@ -88,7 +63,7 @@ public class RFCOMM extends Thread {
         } catch (IOException e) {
         }
 
-        while (connected) {
+        while (isConnected) {
             try {
                 receiveMessage();
                 try {
@@ -132,7 +107,7 @@ public class RFCOMM extends Thread {
             mmSocket = tmpBTSock;
             mmInStream = mmSocket.getInputStream();
             mmOutStream = mmSocket.getOutputStream();
-            connected = mmSocket.isConnected();
+            isConnected = mmSocket.isConnected();
             if (D)
                 Log.i(TAG, "Created socket. State: " + mmSocket.isConnected());
         } catch (IOException e) {
@@ -148,7 +123,7 @@ public class RFCOMM extends Thread {
                 this.mmOutStream.write(exit);
             }
             if (mmSocket != null) {
-                connected = false;
+                isConnected = false;
                 mmSocket.close();
                 mmSocket = null;
             }
@@ -156,32 +131,27 @@ public class RFCOMM extends Thread {
             mmInStream = null;
         } catch (IOException e) {
             Log.d(TAG, e.getMessage());
+        } finally {
+            this.isConnected = false;
         }
     }
 
-    /**
-     * Send message to PC side
-     * 
-     * @param bytes
-     *            Message to be send
-     */
     public synchronized void sendMessage(byte[] bytes) {
         if (mmSocket.isConnected()) {
             try {
                 mmOutStream.write(bytes);
-                Log.i(TAG, "RFCOMM:Send msg:" + bytes.toString());
             } catch (IOException e) {
                 Log.w(TAG, "Bluetooth Disconnected. " + e.getMessage());
+            }
+        } else {
+            try {
+                this.createConnection(this.macAddress, this.serviceUUID);
+            } catch (IOException e) {
+                Log.e(TAG, e.toString());
             }
         }
     }
 
-    /**
-     * Read data
-     * 
-     * @return return received message
-     * @throws IOException
-     */
     public synchronized byte[] receiveMessage() throws IOException {
         if (mmInStream == null) {
             throw new IOException();
@@ -195,10 +165,10 @@ public class RFCOMM extends Thread {
             Log.i("--bt", "" + bytes.length);
 
             if (length >= 5) {
-                Log.i("bt", "" + (int) bytes[4]);
+                Log.i(TAG, "" + (int) bytes[4]);
                 messageQueue.add(bytes);
                 byte[] a = messageQueue.peek();
-                System.out.println("bytes length: " + a.length);
+                Log.i(TAG, "bytes length: " + a.length);
             }
         }
         return bytes;

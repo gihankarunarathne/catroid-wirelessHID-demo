@@ -2,7 +2,6 @@
 package org.catrobat.catroid.server;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.LinkedList;
 

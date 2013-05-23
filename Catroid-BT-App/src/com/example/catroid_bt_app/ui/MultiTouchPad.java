@@ -50,8 +50,6 @@ public class MultiTouchPad extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        // Let the ScaleGestureDetector inspect all events.
-        // mScaleDetector.onTouchEvent(ev);
 
         final int action = ev.getAction();
 

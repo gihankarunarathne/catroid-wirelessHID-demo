@@ -1,7 +1,6 @@
 package org.catrobat.catroid.server.robots;
 
 import java.awt.AWTException;
-import java.awt.MouseInfo;
 import java.awt.Robot;
 import java.util.List;
 

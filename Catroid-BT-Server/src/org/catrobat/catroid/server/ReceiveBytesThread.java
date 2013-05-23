@@ -1,6 +1,5 @@
 package org.catrobat.catroid.server;
 
-import java.awt.MouseInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,8 +7,8 @@ import java.util.ArrayList;
 
 import javax.microedition.io.StreamConnection;
 
-import org.catrobat.catroid.server.robots.RobotWrapper;
 import org.catrobat.catroid.server.robots.RobotMapper;
+import org.catrobat.catroid.server.robots.RobotWrapper;
 
 /**
  * 
@@ -26,7 +25,7 @@ class ReceiveBytesThread implements Runnable {
     private int mouseY;
 
     public ReceiveBytesThread(StreamConnection connection, boolean testMode) {
-        stream_connection = connection;
+        this.stream_connection = connection;
         this.D = testMode;
         this.mouseX = 0; // MouseInfo.getPointerInfo().getLocation().x;
         this.mouseY = 0; // MouseInfo.getPointerInfo().getLocation().y;

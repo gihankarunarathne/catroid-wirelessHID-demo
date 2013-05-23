@@ -28,20 +28,6 @@ public class Communicator {
         hid.stopCommunicator();
     }
 
-    // public void send(String msg) {
-    // try {
-    // byte[] byte_msg = msg.getBytes("US-ASCII");
-    // byte[] val = { 0, 0, 0, 1, 0, 0, 0, 0 };
-    // hid.sendMessage(val);
-    // byte[] key = { 0, 1, 0, 0, 0, 0, 0, 1 };
-    // hid.sendMessage(key);
-    // Log.i(TAG, "Communicator:Send msg :" + byte_msg);
-    // } catch (UnsupportedEncodingException e) {
-    // if (D)
-    // Log.e(TAG, "Communicator:Error send msg ", e);
-    // }
-    // }
-
     public int getModifierCode(int keyValue) {
 
         int modifier;
@@ -72,7 +58,7 @@ public class Communicator {
 
     public int getMouseActiion(int eventType, int value) {
         int combine = 0;
-        if (value > 127)
+        if (value > 127) // most significant bit use for sign convention
             value = 127;
 
         switch (eventType) {
@@ -83,19 +69,19 @@ public class Communicator {
             combine = value;
             break;
         case 4: // set mouse wheel -
-            combine = value | 0x128;
+            combine = value | 0x80;
             break;
-        case 5: // set mouse x, move y+
+        case 5: // set mouse static x and move y+
             combine = value;
             break;
-        case 6: // set mouse x, move y-
-            combine = value | 0x128;
+        case 6: // set mouse static x and move y-
+            combine = value | 0x80;
             break;
-        case 7: // set mouse y, move x+
+        case 7: // set mouse static y move x+
             combine = value;
             break;
-        case 8: // set mouse y, move x-
-            combine = value | 0x128;
+        case 8: // set mouse static y move x-
+            combine = value | 0x80;
             break;
         }
 
@@ -104,9 +90,9 @@ public class Communicator {
 
     public byte[] generateHidCode(Collection<KeyCode> keys) {
         if (D) {
-            Log.d(TAG, "genHIDcode: num# " + keys.size());
+            Log.d(TAG, "num# of keys " + keys.size());
             for (KeyCode key : keys) {
-                Log.d(TAG, "genHIDcode: mod " + key.isModifier() + " val "
+                Log.d(TAG, "key is modify: " + key.isModifier() + " keyValue "
                         + key.getKeyCode());
             }
         }
@@ -117,15 +103,8 @@ public class Communicator {
         for (KeyCode key : keys) {
             if (D)
                 Log.i(TAG, "Event Type:" + key.getEventType());
+
             if (key.getEventType() > 1) {
-                if (D) {
-                    Log.d(TAG,
-                            "Event type:"
-                                    + key.getEventType()
-                                    + " mouseAction:"
-                                    + getMouseActiion(key.getEventType(),
-                                            key.getKeyCode()));
-                }
                 hidCode[1] = key.getEventType();
                 hidCode[3] = getMouseActiion(key.getEventType(),
                         key.getKeyCode());
@@ -151,11 +130,8 @@ public class Communicator {
     }
 
     public void send(KeyCode key) {
-
-        // byte[] data = String.valueOf(key.getKeyCode()).getBytes();
-
         if (hid == null) {
-            Log.e(TAG, "Communicator no available!!");
+            Log.e(TAG, "Communicator not available!!");
             return;
         }
         Collection<KeyCode> c = new ArrayList<KeyCode>();
@@ -165,10 +141,9 @@ public class Communicator {
 
     public void send(Collection<KeyCode> keys) {
         if (hid == null) {
-            Log.e(TAG, "Communicator no available!!");
+            Log.e(TAG, "Communicator not available!!");
             return;
         }
         hid.sendMessage(generateHidCode(keys));
     }
-
 }

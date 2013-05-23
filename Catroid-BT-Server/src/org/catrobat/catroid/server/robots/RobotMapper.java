@@ -60,15 +60,14 @@ public class RobotMapper {
 
 	switch (eventType) {
 	case 2: // set Mouse click
-	    combine = (lookup(value) == 1024) ? InputEvent.BUTTON1_MASK :
-		(lookup(value) == 2048) ? InputEvent.BUTTON2_MASK : InputEvent.BUTTON3_MASK; 
+	    // combine = (lookup(value) == 16) ? InputEvent.BUTTON1_MASK :(lookup(value) == 8) ? InputEvent.BUTTON2_MASK : InputEvent.BUTTON3_MASK; 
+	    combine = lookup(value);
 	    break;
 	case 3: // set mouse wheel +
 	    combine = value;
 	    break;
 	case 4: // set mouse wheel -
-	    combine = value & 0x7f;
-	    combine *= -1;
+	    combine = value;
 	    break;
 	case 5: // set mouse x+, move y+
 	    combine = value;
