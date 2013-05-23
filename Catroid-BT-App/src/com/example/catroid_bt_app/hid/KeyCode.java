@@ -23,8 +23,6 @@ public class KeyCode {
     private boolean isModifier;
     private int keyCode;
     private int eventType;
-    private int mouseDX;
-    private int mouseDY;
 
     public KeyCode() {
         this.eventType = 1;
@@ -46,8 +44,6 @@ public class KeyCode {
         this.isModifier = false;
         this.eventType = eventType;
         this.keyCode = 0;
-        this.mouseDX = dx;
-        this.mouseDY = dy;
     }
 
     public boolean isModifier() {
@@ -74,11 +70,4 @@ public class KeyCode {
         this.eventType = eventType;
     }
 
-    public int getMouseDX() {
-        return this.mouseDX;
-    }
-
-    public int getMouseDY() {
-        return this.mouseDY;
-    }
 }
