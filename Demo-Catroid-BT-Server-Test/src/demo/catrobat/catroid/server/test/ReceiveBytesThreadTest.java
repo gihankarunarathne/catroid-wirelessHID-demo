@@ -1,4 +1,4 @@
-package org.catrobat.catroid.server.test;
+package demo.catrobat.catroid.server.test;
 
 //import java.io.IOException;
 //

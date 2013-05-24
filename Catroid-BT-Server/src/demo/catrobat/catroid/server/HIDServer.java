@@ -1,5 +1,5 @@
 
-package org.catrobat.catroid.server;
+package demo.catrobat.catroid.server;
 
 import java.io.IOException;
 import java.util.Collection;

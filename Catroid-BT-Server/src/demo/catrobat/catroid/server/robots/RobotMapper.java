@@ -1,4 +1,4 @@
-package org.catrobat.catroid.server.robots;
+package demo.catrobat.catroid.server.robots;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;

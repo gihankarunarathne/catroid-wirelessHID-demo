@@ -1,4 +1,4 @@
-package org.catrobat.catroid.server;
+package demo.catrobat.catroid.server;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import javax.microedition.io.StreamConnection;
 
-import org.catrobat.catroid.server.robots.RobotMapper;
-import org.catrobat.catroid.server.robots.RobotWrapper;
+import demo.catrobat.catroid.server.robots.RobotMapper;
+import demo.catrobat.catroid.server.robots.RobotWrapper;
 
 /**
  * 
