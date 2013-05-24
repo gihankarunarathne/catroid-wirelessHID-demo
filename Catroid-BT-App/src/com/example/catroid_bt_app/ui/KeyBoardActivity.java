@@ -65,8 +65,6 @@ public class KeyBoardActivity extends Activity implements OnClickListener {
         shift.setOnClickListener(this);
         ctrl = (Button) findViewById(R.id.button_l_ctrl);
         ctrl.setOnClickListener(this);
-
-        Log.i(TAG, "Key:Started Keyboard Activity");
     }
 
     public void onClick(View v) {
@@ -127,7 +125,7 @@ public class KeyBoardActivity extends Activity implements OnClickListener {
             bt_state.setText("Select " + macaddress);
             com.setMACAddress(macaddress);
             com.start();
-            Log.i(TAG, "Key:Started Communicator");
+            if(D) Log.i(TAG, "Key:Started Communicator");
         }
     }
 
@@ -136,6 +134,12 @@ public class KeyBoardActivity extends Activity implements OnClickListener {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.key_board, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.com.stop();
+        super.onDestroy();
     }
 
 }

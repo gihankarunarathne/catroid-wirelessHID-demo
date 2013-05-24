@@ -68,7 +68,6 @@ public class BluetoothManager implements WirelessManager {
             act.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             return BLUETOOTH_ACTIVATING;
         } else {
-            // Log.d("TAG", "LOOP!!!!!");
             return BLUETOOTH_ALREADY_ON;
         }
     }
@@ -94,7 +93,7 @@ public class BluetoothManager implements WirelessManager {
         if (macaddress != "") {
             this.startBTCommunicator(macaddress);
             if (D)
-                Log.i(TAG, "Started BTCommunicator with MAC: " + macaddress);
+                Log.i(TAG, "Started BTCommunicator with MAC address: " + macaddress);
         }
     }
 
