@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.catroid_bt_app.R;
 import com.example.catroid_bt_app.bluetooth.BluetoothManager;
@@ -38,8 +39,9 @@ public class MouseActivity extends Activity implements OnClickListener {
     private String macaddress;
 
     LinearLayout layout, container, buttons;
-    TextView text;
-    Button b_connect, b_disconnect, b_left, b_right, b_middle;
+    TextView bt_state;
+    ToggleButton b_connect;
+    Button b_left, b_right, b_middle;
     MultiTouchPad touchPad;
 
     public static final int BUTTON1_DOWN = 100;
@@ -72,18 +74,17 @@ public class MouseActivity extends Activity implements OnClickListener {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         touchPad.setBackgroundColor(Color.GRAY);
-        text = new TextView(this);
-        text.setText("Press Start to Connect ...");
-        text.setLayoutParams(new TableLayout.LayoutParams(
+        bt_state = new TextView(this);
+        bt_state.setText("Press Start to Connect ...");
+        bt_state.setLayoutParams(new TableLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
-        b_connect = new Button(this);
-        b_connect.setText("Connect");
+        b_connect = new ToggleButton(this);
+        b_connect.setText(R.id.button_bt_connect);
+        b_connect.setTextOn("Connect");
+        b_connect.setTextOff("Disconnect");
         b_connect.setOnClickListener(this);
         b_connect.setId(101);
-        b_disconnect = new Button(this);
-        b_disconnect.setText("DisConnect");
-        b_disconnect.setOnClickListener(this);
-        b_disconnect.setId(105);
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -105,9 +106,8 @@ public class MouseActivity extends Activity implements OnClickListener {
         b_right.setWidth(Math.round(width) * 2 / 5);
         b_right.setId(104);
 
-        container.addView(text);
+        container.addView(bt_state);
         container.addView(b_connect);
-        container.addView(b_disconnect);
         buttons.addView(b_left);
         buttons.addView(b_middle);
         buttons.addView(b_right);
@@ -115,33 +115,41 @@ public class MouseActivity extends Activity implements OnClickListener {
         layout.addView(buttons);
         layout.addView(touchPad);
         setContentView(layout);
+        b_connect.setText("Disconnect");
     }
 
     public void onClick(View v) {
         Log.i(TAG, String.valueOf(v.getId()));
+
         switch (v.getId()) {
         case 101:
-            // Launch the DeviceListActivity to see devices and do scan
-            Intent serverIntent = new Intent(this, DeviceListActivity.class);
-            startActivityForResult(serverIntent, REQUEST_ENABLE_BT);
-            text.setText("Request Connecting..");
+            boolean on = ((ToggleButton) v).isChecked();
+            if (on) {
+                if (D)
+                    Log.d(TAG, "Key:Started DeviceListActivity");
+                Intent serverIntent = new Intent(this, DeviceListActivity.class);
+                startActivityForResult(serverIntent, REQUEST_ENABLE_BT);
+                bt_state.setText("Request Connecting..");
+            } else {
+                this.com.stop();
+                bt_state.setText("Disonnect");
+            }
             break;
-
         case 102:
             com.send(new KeyCode(2, BUTTON1_DOWN));
-            text.setText("click left");
+            bt_state.setText("click left");
             break;
         case 103:
             com.send(new KeyCode(2, BUTTON2_DOWN));
-            text.setText("click middle");
+            bt_state.setText("click middle");
             break;
         case 104:
             com.send(new KeyCode(2, BUTTON3_DOWN));
-            text.setText("click right");
+            bt_state.setText("click right");
             break;
         case 105:
             com.stop();
-            text.setText("Disconnect");
+            bt_state.setText("Disconnect");
             break;
         }
     }
@@ -155,7 +163,7 @@ public class MouseActivity extends Activity implements OnClickListener {
             // Get the device MAC address
             this.macaddress = data.getExtras().getString(
                     DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-            text.setText("Select " + macaddress);
+            bt_state.setText("Select " + macaddress);
             com.setMACAddress(macaddress);
             com.start();
             Log.i(TAG, "Key:Started Communicator");
@@ -167,6 +175,12 @@ public class MouseActivity extends Activity implements OnClickListener {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.mouse, menu);
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        
     }
 
 }

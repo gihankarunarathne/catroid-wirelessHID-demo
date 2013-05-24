@@ -14,6 +14,7 @@ public class RobotWrapper {
     }
 
     public void mouseMove(int x, int y) {
+        //System.out.println("Move mouse to "+x+":"+y);
         robot.mouseMove(x, y);
     }
 

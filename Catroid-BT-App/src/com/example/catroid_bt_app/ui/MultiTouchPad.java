@@ -13,7 +13,7 @@ import android.view.View;
 import com.example.catroid_bt_app.hid.Communicator;
 import com.example.catroid_bt_app.hid.KeyCode;
 
-@SuppressLint("ViewConstructor")
+@SuppressLint({ "ViewConstructor", "DrawAllocation" })
 public class MultiTouchPad extends View {
     // Debug
     private static final String TAG = "Catroid-BT";
@@ -61,7 +61,7 @@ public class MultiTouchPad extends View {
             mLastTouchX = x;
             mLastTouchY = y;
             mActivePointerId = ev.getPointerId(0);
-            Log.i(TAG, "ACTION_DOWN");
+            if(D) Log.i(TAG, "ACTION_DOWN");
             break;
         }
 
@@ -75,6 +75,9 @@ public class MultiTouchPad extends View {
 
             mdx += dx;
             mdy += dy;
+            
+            if (D)
+                Log.i(TAG, "move >> dx:" + dx + " dy:" + dy); 
 
             if (mdy > buffer) {
                 actionList.add(new KeyCode(5, Math.round(mdy / pixelScale)));
@@ -144,7 +147,7 @@ public class MultiTouchPad extends View {
     @Override
     public void onDraw(Canvas canvas) {
         if (D)
-            Log.i(TAG, "out >> dx:" + mdx + " dy:" + mdy);
+            Log.i(TAG, "send >> mdx:" + mdx + " mdy:" + mdy);
         if (actionList.size() > 0) {
             this.com.send(actionList);
             isMove = false;

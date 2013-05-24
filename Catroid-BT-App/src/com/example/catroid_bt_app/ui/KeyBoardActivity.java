@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.catroid_bt_app.R;
 import com.example.catroid_bt_app.bluetooth.BluetoothManager;
@@ -32,6 +33,7 @@ public class KeyBoardActivity extends Activity implements OnClickListener {
     // BT state view
     private TextView bt_state;
     Button shift, ctrl;
+    ToggleButton bt_connect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class KeyBoardActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_key_board);
         com = new Communicator(BluetoothManager.getBluetoothManager(this));
 
-        Button bt_connect = (Button) findViewById(R.id.button_bt_connect);
+        bt_connect = (ToggleButton) findViewById(R.id.button_bt_connect);
         bt_connect.setOnClickListener(this);
 
         bt_state = (TextView) findViewById(R.id.textView_bt_state);
@@ -69,6 +71,7 @@ public class KeyBoardActivity extends Activity implements OnClickListener {
 
     public void onClick(View v) {
         Collection<KeyCode> keyList = new ArrayList<KeyCode>();
+
         if (shift.isPressed())
             keyList.add(new KeyCode(true, 225));
         if (ctrl.isPressed())
@@ -76,14 +79,18 @@ public class KeyBoardActivity extends Activity implements OnClickListener {
 
         switch (v.getId()) {
         case R.id.button_bt_connect:
-            // Launch the DeviceListActivity to see devices and do scan
-            if (D)
-                Log.d(TAG, "Key:Started DeviceListActivity");
-            Intent serverIntent = new Intent(this, DeviceListActivity.class);
-            startActivityForResult(serverIntent, REQUEST_ENABLE_BT);
-            bt_state.setText("Request Connecting..");
+            boolean on = ((ToggleButton) v).isChecked();
+            if (on) {
+                if (D)
+                    Log.d(TAG, "Key:Started DeviceListActivity");
+                Intent serverIntent = new Intent(this, DeviceListActivity.class);
+                startActivityForResult(serverIntent, REQUEST_ENABLE_BT);
+                bt_state.setText("Request Connecting..");
+            } else {
+                this.com.stop();
+                bt_state.setText("Disonnect");
+            }
             break;
-
         case R.id.button_q:
             keyList.add(new KeyCode(false, 20));
             break;
@@ -125,7 +132,8 @@ public class KeyBoardActivity extends Activity implements OnClickListener {
             bt_state.setText("Select " + macaddress);
             com.setMACAddress(macaddress);
             com.start();
-            if(D) Log.i(TAG, "Key:Started Communicator");
+            if (D)
+                Log.i(TAG, "Key:Started Communicator");
         }
     }
 

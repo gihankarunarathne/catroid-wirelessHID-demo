@@ -103,11 +103,13 @@
         android:layout_weight="124.27"
         android:gravity="bottom" >
 
-        <Button
+        <ToggleButton
             android:id="@+id/button_bt_connect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Connect" />
+            android:text="Connect"
+            android:textOff="@string/bt_disconnect_keyboard"
+            android:textOn="@string/bt_connect_keyboard" />
 
         <TextView
             android:id="@+id/textView_bt_state"

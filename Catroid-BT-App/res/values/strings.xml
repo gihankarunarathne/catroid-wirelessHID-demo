@@ -21,4 +21,6 @@
     <string name="none_found">No unpaired devices found</string>
     <string name="none_paired">No paired devices found</string>
     <string name="no_paired_rfccomm_device">no paired rfccomm device</string>
+    <string name="bt_connect_keyboard">Connect</string>
+    <string name="bt_disconnect_keyboard">Disconnect</string>
 </resources>

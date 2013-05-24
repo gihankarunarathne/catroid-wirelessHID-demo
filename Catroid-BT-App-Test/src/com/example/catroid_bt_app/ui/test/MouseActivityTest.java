@@ -1,11 +1,16 @@
 package com.example.catroid_bt_app.ui.test;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
+import android.graphics.Point;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
+import android.view.Display;
 
 import com.example.catroid_bt_app.ui.MouseActivity;
 import com.jayway.android.robotium.solo.Solo;
 
+@SuppressLint("NewApi")
 public class MouseActivityTest extends
         ActivityInstrumentationTestCase2<MouseActivity> {
     private Solo solo;
@@ -40,25 +45,77 @@ public class MouseActivityTest extends
             solo.sleep(2000);
         }
 
-        solo.sleep(500);
-        solo.clickOnButton("Connect");
-        solo.sleep(500);
+        solo.sleep(200);
+        solo.clickOnButton("Disconnect");
+        solo.sleep(200);
         solo.clickOnButton("Search Bluetooth devices");
-        solo.sleep(1000);
-        solo.clickOnMenuItem("ubuntu-gc");
-        solo.sleep(2000);
-        solo.drag(300, 600, 200, 500, 10);
         solo.sleep(500);
+        solo.clickOnMenuItem("ubuntu-gc"); // change it as necessary
+        solo.sleep(3000);
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        float width = size.x;
+        float height = size.y;
+        Log.i("Catroid-BT", "width:" + width + " height:" + height);
+
+        for (int i = 0; i < 50; i++) {
+            solo.drag(width / 2, width / 2 + 11, height / 2, height / 2, 1);
+            solo.sleep(10);
+        }
+        solo.sleep(50);
+        for (int i = 0; i < 50; i++) {
+            solo.drag(width / 2, width / 2, height / 2 + 11, height / 2, 1);
+            solo.sleep(10);
+        }
+        solo.sleep(50);
+        for (int i = 0; i < 50; i++) {
+            solo.drag(width / 2, width / 2 - 11, height / 2, height / 2, 1);
+            solo.sleep(10);
+        }
+        solo.sleep(50);
+        for (int i = 0; i < 50; i++) {
+            solo.drag(width / 2, width / 2, height / 2 - 11, height / 2, 1);
+            solo.sleep(10);
+        }
+        solo.sleep(50);
+
+        // -------
+        for (int i = 0; i < 50; i++) {
+            solo.drag(width / 2, width / 2 + 11, height / 2, height / 2, 1);
+            solo.drag(width / 2, width / 2, height / 2 + 11, height / 2, 1);
+            solo.sleep(20);
+        }
+        solo.sleep(50);
+        for (int i = 0; i < 50; i++) {
+            solo.drag(width / 2, width / 2 - 11, height / 2, height / 2, 1);
+            solo.drag(width / 2, width / 2, height / 2 - 11, height / 2, 1);
+            solo.sleep(20);
+        }
+        solo.sleep(50);
+        for (int i = 0; i < 50; i++) {
+            solo.drag(width / 2, width / 2 + 11, height / 2, height / 2, 1);
+            solo.drag(width / 2, width / 2, height / 2 - 11, height / 2, 1);
+            solo.sleep(20);
+        }
+        solo.sleep(50);
+        for (int i = 0; i < 50; i++) {
+            solo.drag(width / 2, width / 2 - 11, height / 2, height / 2, 1);
+            solo.drag(width / 2, width / 2, height / 2 + 11, height / 2, 1);
+            solo.sleep(20);
+        }
+        solo.sleep(50);
+
         solo.clickOnButton("Left");
         solo.sleep(500);
         solo.clickOnButton("Right");
         solo.sleep(500);
         solo.clickOnButton("M");
         solo.sleep(500);
-        
-        
-        solo.clickOnButton("DisConnect");
-        solo.sleep(2000);
+
+        solo.clickOnButton("Connect");
+        solo.sleep(1000);
     }
 
 }

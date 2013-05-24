@@ -39,12 +39,29 @@ public class KeyBoardActivityTest extends ActivityInstrumentationTestCase2<KeyBo
         
         solo.clickOnView(solo.getView(R.id.button_a));
         solo.sleep(500);
-        solo.clickOnButton("Connect");
+        solo.clickOnToggleButton("Disconnect");
         solo.sleep(500);
         solo.clickOnButton("Search Bluetooth devices");
-        solo.sleep(2000);
-        solo.clickOnMenuItem("ubuntu-gc");
-        solo.sleep(5000);
+        solo.sleep(1000);
+        solo.clickOnMenuItem("ubuntu-gc"); // configure as necessary
+        solo.sleep(3000);
+        
+        solo.clickOnView(solo.getView(R.id.button_q));
+        solo.sleep(500);
+        solo.clickLongOnView(solo.getView(R.id.button_l_shift),500);
+        solo.sleep(10);
+        solo.clickOnView(solo.getView(R.id.button_q));
+        solo.sleep(500);
+        solo.clickOnView(solo.getView(R.id.button_space));
+        solo.sleep(500);
+        
+        solo.clickLongOnView(solo.getView(R.id.button_l_shift),500);
+        solo.clickLongOnView(solo.getView(R.id.button_l_ctrl),500);
+        solo.clickOnView(solo.getView(R.id.button_a));
+        solo.sleep(500);
+        
+        solo.clickOnToggleButton("Connect");
+        solo.sleep(1000);
     }
 
 }

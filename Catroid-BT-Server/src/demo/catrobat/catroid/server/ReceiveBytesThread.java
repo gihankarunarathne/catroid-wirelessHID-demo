@@ -1,5 +1,6 @@
 package demo.catrobat.catroid.server;
 
+import java.awt.MouseInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -27,8 +28,8 @@ class ReceiveBytesThread implements Runnable {
     public ReceiveBytesThread(StreamConnection connection, boolean testMode) {
         this.stream_connection = connection;
         this.D = testMode;
-        this.mouseX = 0; // MouseInfo.getPointerInfo().getLocation().x;
-        this.mouseY = 0; // MouseInfo.getPointerInfo().getLocation().y;
+        this.mouseX = MouseInfo.getPointerInfo().getLocation().x;
+        this.mouseY = MouseInfo.getPointerInfo().getLocation().y;
     }
 
     public void run() {
@@ -99,9 +100,6 @@ class ReceiveBytesThread implements Runnable {
             switch (input[1]) {
             case 2:
                 rw.mouseClick(rm.extractMouseValue(input[1], input[3]));
-                this.mouseX = 500;
-                this.mouseY = 500;
-                rw.mouseMove(mouseX, mouseY);
                 break;
             case 3:
                 rw.mouseWheel(rm.extractMouseValue(input[1], input[3]));
