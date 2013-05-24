@@ -1,4 +1,4 @@
-package com.example.catroid_bt_app.test.ui;
+package com.example.catroid_bt_app.ui.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 

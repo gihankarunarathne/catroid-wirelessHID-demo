@@ -1,4 +1,4 @@
-package com.example.catroid_bt_app.test.hid;
+package com.example.catroid_bt_app.hid.test;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,7 +6,6 @@ import java.util.Random;
 
 import android.test.AndroidTestCase;
 
-import com.example.catroid_bt_app.bluetooth.BluetoothManager;
 import com.example.catroid_bt_app.hid.Communicator;
 import com.example.catroid_bt_app.hid.KeyCode;
 import com.example.catroid_bt_app.ui.MouseActivity;
