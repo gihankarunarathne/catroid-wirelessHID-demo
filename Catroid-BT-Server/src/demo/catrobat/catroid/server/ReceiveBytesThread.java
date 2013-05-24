@@ -108,20 +108,20 @@ class ReceiveBytesThread implements Runnable {
                 rw.mouseWheel(rm.extractMouseValue(input[1], input[3]));
                 break;
             case 5:
-                this.mouseY += rm.extractMouseValue(input[1], input[3]);
-                rw.mouseMove(mouseX, mouseY);
+                this.mouseY = rm.extractMouseValue(input[1], input[3]) + MouseInfo.getPointerInfo().getLocation().y;
+                rw.mouseMove(MouseInfo.getPointerInfo().getLocation().x, mouseY);
                 break;
             case 6:
-                this.mouseY += rm.extractMouseValue(input[1], input[3]);
-                rw.mouseMove(mouseX, mouseY);
+                this.mouseY = rm.extractMouseValue(input[1], input[3]) + MouseInfo.getPointerInfo().getLocation().y;
+                rw.mouseMove(MouseInfo.getPointerInfo().getLocation().x, mouseY);
                 break;
             case 7:
-                this.mouseX += rm.extractMouseValue(input[1], input[3]);
-                rw.mouseMove(mouseX, mouseY);
+                this.mouseX = rm.extractMouseValue(input[1], input[3]) + MouseInfo.getPointerInfo().getLocation().x;
+                rw.mouseMove(mouseX, MouseInfo.getPointerInfo().getLocation().y);
                 break;
             case 8:
-                this.mouseX += rm.extractMouseValue(input[1], input[3]);
-                rw.mouseMove(mouseX, mouseY);
+                this.mouseX = rm.extractMouseValue(input[1], input[3])+MouseInfo.getPointerInfo().getLocation().x;
+                rw.mouseMove(mouseX, MouseInfo.getPointerInfo().getLocation().y);
                 break;
             }
         }
