@@ -39,7 +39,7 @@ public class MouseActivity extends Activity implements OnClickListener {
 
     LinearLayout layout, container, buttons;
     TextView text;
-    Button b_connect, b_left, b_right, b_middle;
+    Button b_connect, b_disconnect, b_left, b_right, b_middle;
     MultiTouchPad touchPad;
 
     public static final int BUTTON1_DOWN = 100;
@@ -80,6 +80,10 @@ public class MouseActivity extends Activity implements OnClickListener {
         b_connect.setText("Connect");
         b_connect.setOnClickListener(this);
         b_connect.setId(101);
+        b_disconnect = new Button(this);
+        b_disconnect.setText("DisConnect");
+        b_disconnect.setOnClickListener(this);
+        b_disconnect.setId(105);
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -91,7 +95,7 @@ public class MouseActivity extends Activity implements OnClickListener {
         b_left.setWidth(Math.round(width) * 2 / 5);
         b_left.setId(102);
         b_middle = new Button(this);
-        b_middle.setText("");
+        b_middle.setText("M");
         b_middle.setOnClickListener(this);
         b_middle.setWidth(Math.round(width) / 5);
         b_middle.setId(103);
@@ -103,6 +107,7 @@ public class MouseActivity extends Activity implements OnClickListener {
 
         container.addView(text);
         container.addView(b_connect);
+        container.addView(b_disconnect);
         buttons.addView(b_left);
         buttons.addView(b_middle);
         buttons.addView(b_right);
@@ -133,6 +138,10 @@ public class MouseActivity extends Activity implements OnClickListener {
         case 104:
             com.send(new KeyCode(2, BUTTON3_DOWN));
             text.setText("click right");
+            break;
+        case 105:
+            com.stop();
+            text.setText("Disconnect");
             break;
         }
     }

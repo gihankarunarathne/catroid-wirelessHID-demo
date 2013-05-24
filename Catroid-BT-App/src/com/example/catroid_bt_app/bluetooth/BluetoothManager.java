@@ -41,9 +41,6 @@ public class BluetoothManager implements WirelessManager {
         this.act = activity;
         this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         this.activateBluetooth();
-        if (D)
-            Log.d(TAG, "BluetoothManager Created");
-
     }
 
     public synchronized static BluetoothManager getBluetoothManager(
