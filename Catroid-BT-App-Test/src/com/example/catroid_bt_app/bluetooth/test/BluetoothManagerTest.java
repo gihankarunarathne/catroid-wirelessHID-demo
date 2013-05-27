@@ -10,7 +10,7 @@ import com.jayway.android.robotium.solo.Solo;
 public class BluetoothManagerTest extends ActivityInstrumentationTestCase2<KeyBoardActivity> {
    
     private BluetoothManager bluetooth = null;
-    String eq = "70:F3:95:A4:7F:67";   //tmp MACAddress
+    String macAddress = "70:F3:95:A4:7F:67";   //temp MACAddress
     private Solo solo;
     
     public BluetoothManagerTest() {
@@ -40,7 +40,7 @@ public class BluetoothManagerTest extends ActivityInstrumentationTestCase2<KeyBo
              solo.sleep(5000);
          }
 
-         bluetooth.setMACAddress(eq);
+         bluetooth.setMACAddress(macAddress);
          bluetooth.startCommunicator();
          solo.sleep(4000);
  

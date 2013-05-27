@@ -50,7 +50,7 @@ public class MouseActivityTest extends
         solo.sleep(200);
         solo.clickOnButton("Search Bluetooth devices");
         solo.sleep(500);
-        solo.clickOnMenuItem("ubuntu-gc"); // change it as necessary
+        solo.clickInList(0, 0);
         solo.sleep(3000);
 
         Display display = getActivity().getWindowManager().getDefaultDisplay();

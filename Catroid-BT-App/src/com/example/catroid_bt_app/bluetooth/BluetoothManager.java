@@ -133,4 +133,8 @@ public class BluetoothManager implements WirelessManager {
             return null;
         }
     }
+    
+    public boolean isConnected(){
+	return this.rfCom.isConnected();
+    }
 }
